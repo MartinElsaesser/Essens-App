@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="de">
+<!-- colors https://coolors.co/palette/264653-2a9d8f-e9c46a-f4a261-e76f51 -->
+<!-- slider https://codepen.io/garethdweaver/pen/WNoWPN -->
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Food</title>
+
+  <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <style>
+    :root {
+      --black: #333;
+      --blue: #264653;
+      --green: #2a9d8f;
+      --yellow: #e9c46a;
+      --orang: #f4a261;
+      --red: #e76f51;
+    }
+
+    * {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+      color: var(--black);
+    }
+
+    button {
+      border: none;
+      background: transparent;
+      cursor: pointer;
+      outline: none;
+    }
+
+    .container {
+      width: 100%;
+      padding: 20px;
+    }
+  </style>
+  <style>
+    .search {
+      position: relative;
+      display: flex;
+      align-items: center;
+      --icon-size: 17px;
+    }
+
+    .search .icon-food {
+      transition: all 100ms linear;
+      position: absolute;
+      left: 15px;
+      font-size: var(--icon-size);
+      opacity: 0.8;
+    }
+
+
+    .search input:focus~.icon-food {
+      opacity: 1;
+    }
+
+    .search input {
+      transition: all 100ms linear;
+      width: 100%;
+      padding: 15px 0 15px 40px;
+      border-radius: 50px;
+      border: var(--black) 1px solid;
+      outline: none;
+    }
+
+    .search input:focus {
+      border: var(--green) 1px solid;
+    }
+
+    .search button {
+      transition: all 50ms linear;
+      right: 15px;
+      position: absolute;
+      border: none;
+      color: var(--green);
+      font-size: var(--icon-size);
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .search button i {
+      position: absolute;
+    }
+
+    @media (hover:hover) {
+      .search button:hover {
+        color: var(--blue);
+      }
+    }
+
+    .search button:active {
+      transform: scale(0.8);
+    }
+  </style>
+  <style>
+    .settings-modal {
+      z-index: 10;
+      position: fixed;
+      width: 100%;
+      height: 80vh;
+      bottom: 0;
+      transform: translateY(100%);
+      background: var(--blue);
+      transition: transform 100ms linear;
+      color: white;
+      padding: 60px 20px 20px 20px;
+    }
+
+    .settings-modal.close-icon {
+      color: red;
+      font-size: 20px;
+    }
+
+    .settings-modal.hidden {
+      transform: translateY(0);
+    }
+
+    .settings-modal button.close {
+      transition: all 50ms linear;
+      top: 15px;
+      right: 15px;
+      position: absolute;
+      color: var(--red);
+      font-size: var(--icon-size);
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    @media (hover: hover) {
+      .settings-modal button.close:hover {
+        opacity: 0.8;
+      }
+    }
+
+    .settings-modal button.close .close-icon {
+      font-size: 25px;
+    }
+
+    .settings-modal button.close:active {
+      transform: scale(0.8);
+    }
+  </style>
+  <style>
+    nav {
+      background: #eae8e8;
+      width: 100%;
+      position: fixed;
+      height: 100px;
+      bottom: 0;
+      display: flex;
+      justify-content: space-evenly;
+      align-items: center;
+    }
+
+    nav .link {
+      width: 20%;
+      display: flex;
+      justify-content: center;
+    }
+
+    nav button {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 60px;
+      height: 60px;
+      color: var(--black);
+      font-size: 30px;
+    }
+
+    @media (hover: hover) {
+      nav button:hover {
+        opacity: 0.8;
+      }
+    }
+
+    nav button:active {
+      transform: scale(0.8);
+    }
+
+    nav .link.active button {
+      color: var(--green);
+      position: relative;
+    }
+
+    nav .slider {
+      position: absolute;
+      background: var(--green);
+      border-radius: 5px;
+      height: 20px;
+      width: 20%;
+      bottom: -10px;
+      left: 0;
+      transform: translateX(4vw);
+      transition: 150ms linear transform;
+    }
+
+    nav .slider.home {
+      transform: translateX(4vw);
+    }
+
+    nav .slider.new_recipe {
+      transform: translateX(28vw);
+    }
+
+    nav .slider.groups {
+      transform: translateX(52vw);
+    }
+
+    nav .slider.user {
+      transform: translateX(76vw);
+    }
+  </style>
+</head>
+
+<body x-data="{ settings: false, screen: 'home' }">
+  <div class="container">
+    <header>
+      <div class="search">
+        <input type="text" placeholder="Was möchtest du heute essen?">
+        <i class="fa-solid fa-utensils icon-food"></i>
+        <button @click="settings = !settings">
+          <i class="fa-solid fa-sliders" x-show="!settings" x-transition></i>
+          <i class="fa-solid fa-xmark" x-show="settings" x-transition></i>
+        </button>
+      </div>
+    </header>
+
+  </div>
+  <div class="settings-modal" :class="{ 'hidden': settings}">
+    <button class="close" @click="settings = false">
+      <i class="fa-regular fa-circle-xmark close-icon"></i>
+    </button>
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eveniet laborum quasi omnis itaque error molestiae distinctio ea. Facere illum, quos, minus et nulla alias ipsum eius modi illo accusantium corporis.</p>
+  </div>
+
+  <nav>
+    <div class="link" :class="screen === 'home' && 'active'">
+      <button @click="screen = 'home'"><i class="fa-solid fa-burger"></i></button>
+    </div>
+    <div class="link" :class="screen === 'new_recipe' && 'active'">
+      <button @click="screen = 'new_recipe'"><i class="fa-solid fa-circle-plus"></i></button>
+    </div>
+    <div class="link" :class="screen === 'groups' && 'active'">
+      <button @click="screen = 'groups'"><i class="fa-solid fa-users"></i></button>
+    </div>
+    <div class="link" :class="screen === 'user' && 'active'">
+      <button @click="screen = 'user'"><i class="fa-solid fa-user"></i></button>
+    </div>
+    <div class="slider" :class="screen"></div>
+  </nav>
+</body>
+
+</html>
