@@ -9,7 +9,7 @@ export default tag Home
 		.recipes-container
 			max-width: 500px h:45vh w:100% d:flex fld:column
 	prop drawer-open = false
-	prop categories = ["Frühstück", "4-Personen", "herzhaft"]
+	prop categories = ["Frühstück", "4-Personen", "herzhaft", "gesund"]
 	def deleteCategorie e
 		let deleteIndex = e.detail
 		categories = categories.filter(do(el,i) i != deleteIndex)
@@ -19,7 +19,7 @@ export default tag Home
 				<Drawer>
 		<main>
 			<Header categories=categories @delete=deleteCategorie bind=drawer-open>
-			<div.recipes-contaienr>
+			<div.recipes-container>
 				<h2[w:100%]> "Vorschläge für dich:"
 				<div.recipes>
 					for recipe in recommended
@@ -101,11 +101,12 @@ tag Header
 		this.flipping.read()
 
 	def rendered
-		log this.flipping
+		log "rendered"
 		if(this.flipping)
 			this.flipping.flip()
 
 	def render
+		log "render"
 		if(this.flipping)
 			this.flipping.read()
 		<self>

@@ -7,16 +7,7 @@ import User from "./pages/user.imba"
 tag Layout
 	<self>
 		css w:100% h:100%
-		<App>
 		<Navbar>
-		<Home route="/home">
-		<Add route="/add">
-		<Groups route="/groups">
-		<User route="/user">
-
-tag App
-	css w:100% h:100%
-	<self>
 		<Home route="/home">
 		<Add route="/add">
 		<Groups route="/groups">
