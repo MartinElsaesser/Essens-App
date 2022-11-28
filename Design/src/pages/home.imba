@@ -1,20 +1,27 @@
+import Flipping from "flipping/lib/adapters/web"
 import {recommended} from "../recommended";
 export default tag Home
-	prop settings = false
-	prop suggested = recommended
+	css w:100% h:100% px:10px pt:20px
+		main
+			d:flex ai:center fld:column jc:space-between
+		.recipes
+			d:grid gtc: 1fr 1fr 1fr gtr: 1fr 1fr grid-gap:5px w:100% h:100%
+		.recipes-container
+			max-width: 500px h:45vh w:100% d:flex fld:column
+	prop drawer-open = false
+	prop categories = ["Frühstück", "4-Personen", "herzhaft"]
+	def deleteCategorie e
+		let deleteIndex = e.detail
+		categories = categories.filter(do(el,i) i != deleteIndex)
 	<self>
-		css w:100% h:100% px:10px pt:20px 
-		<Search bind=settings>
 		<global>
 			if settings
 				<Drawer>
 		<main>
-			css d:flex ai:center fld:column jc:space-between
+			<Header categories=categories @delete=deleteCategorie bind=drawer-open>
 			<div.recipes-contaienr>
-				css max-width: 500px h:45vh w:100% d:flex fld:column
 				<h2[w:100%]> "Vorschläge für dich:"
 				<div.recipes>
-					css d:grid gtc: 1fr 1fr 1fr gtr: 1fr 1fr grid-gap:5px w:100% h:100%
 					for recipe in recommended
 						<Recipe recipe=recipe>
 			<div.last>
@@ -64,6 +71,7 @@ tag Search
 		@media(hover:hover)@hover o:0.8
 		@active scale: 0.8
 		i pos:absolute
+
 	<self>
 		<input type='text' placeholder="Was möchtest du heute essen?">
 		<i.fa-solid.fa-utensils.icon-food>
@@ -77,3 +85,41 @@ tag Drawer
 	css h:80vh w:100vw bg:blue zi:11 pos:fixed top:20vh e:.8s
 		@off o:0 y:100vh
 	<self ease>
+
+
+tag Header
+	prop categories
+	css w:100%
+		.tags d:flex grid-gap:4px mt:10px ofx:auto
+		* transition: all .3s cubic-bezier(.2, 0, .4, 1);
+
+	def mount
+		this.flipping = new Flipping({
+			parentElement: this,
+			# duration: 600
+		})
+		this.flipping.read()
+
+	def rendered
+		log this.flipping
+		if(this.flipping)
+			this.flipping.flip()
+
+	def render
+		if(this.flipping)
+			this.flipping.read()
+		<self>
+			<Search bind=data>
+			<div.tags>
+				for category,i in categories
+					<Toast index=i data-flip-key=category> category
+
+
+tag Toast
+	prop index
+	css py:5px pl:10px pr:10px bg:$green c:white rd:50px d:flex jc:center ai:center grid-gap: 10px ws:nowrap
+		button p:0
+			@hover c:$red
+	<self>
+		<slot>
+		<button @click.emit("delete", index)> <i.fa-solid.fa-x>

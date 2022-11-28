@@ -1,3 +1,6 @@
 export default tag Add
+	css main pt:10px
 	<self>
-		<h1> "Add"
+		<main>
+			<h1> "Add"
+			<p> "Paragraph"

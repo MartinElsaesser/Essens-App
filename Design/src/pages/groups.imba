@@ -1,3 +1,6 @@
 export default tag Groups
+	css main pt:10px
 	<self>
-		<h1> "Groups"
+		<main>
+			<h1> "Groups"
+			<p> "Paragraph"

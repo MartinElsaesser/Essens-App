@@ -1,3 +1,6 @@
 export default tag User
+	css main pt:10px
 	<self>
-		<h1> "User"
+		<main>
+			<h1> "User"
+			<p> "Paragraph"
