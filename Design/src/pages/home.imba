@@ -15,7 +15,7 @@ export default tag Home
 		categories = categories.filter(do(el,i) i != deleteIndex)
 	<self>
 		<global>
-			if settings
+			if drawer-open
 				<Drawer>
 		<main>
 			<Header categories=categories @delete=deleteCategorie bind=drawer-open>
