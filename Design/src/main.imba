@@ -1,11 +1,16 @@
-global css @root
-	$black: #333 $blue: #264653 $green: #2a9d8f $yellow: #e9c46a $orange: #f4a261 $red: #e76f51 $gray: #eae8e8
-global css html,body m:0 p:0
-global css * box-sizing: border-box -webkit-tap-highlight-color: transparent
+import "./styles"
+import Home from "./sites/Home"
+import Add from "./sites/Add.imba"
+import Groups from "./sites/Groups"
+import User from "./sites/User"
 
 tag Layout
 	<self>
 		<Navbar>
+		<Home route="/home">
+		<Add route="/add">
+		<Groups route="/groups">
+		<User route="/user">
 
 tag Navbar
 	<self>
