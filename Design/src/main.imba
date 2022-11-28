@@ -9,6 +9,10 @@ tag Layout
 		css w:100% h:100%
 		<App>
 		<Navbar>
+		<Home route="/home">
+		<Add route="/add">
+		<Groups route="/groups">
+		<User route="/user">
 
 tag App
 	css w:100% h:100%
