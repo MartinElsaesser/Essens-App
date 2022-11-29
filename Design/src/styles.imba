@@ -9,7 +9,7 @@ global css
 		bd:none bg:none cursor:pointer
 
 	::-webkit-scrollbar
-		w: 10px h: 10px
+		w:5px h:5px
 
 	::-webkit-scrollbar-track
 		bg: #f1f1f1

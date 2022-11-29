@@ -24,7 +24,7 @@ tag Navbar
 
 tag NavLink < button
 	<self>
-		css w:20% h:50px d:flex ai:center jc:center td:none color:$black fs:3xl tween:all 50ms linear bg:transparent bd:none cursor:pointer
+		css w:20% h:50px d:flex ai:center jc:center td:none c:$black fs:3xl tween:all 50ms linear bg:transparent bd:none cursor:pointer
 			&.active color:$green
 			@active scale: 0.8
 			@media(hover: hover)@hover o:0.8
