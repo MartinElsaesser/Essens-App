@@ -118,7 +118,7 @@ tag Recipe_Small
 		@invalid@first ml:0px
 		img w:100% rd:10px
 		.text c:white py:5px
-	<self>
+	<self route-to="/recipe/{recipe.id}">
 		<img src=recipe.img>
 		<div.text> recipe.name
 
