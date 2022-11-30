@@ -1,9 +1,9 @@
 {
 	"name": "Design",
 	"scripts": {
-		"dev": "imba --base . -w src/index.html",
+		"dev": "imba --base / -w src/index.html",
 		"start": "npm run dev",
-		"build": "imba build --base . src/index.html",
+		"build": "imba build --base / src/index.html",
 		"preview": "npx http-server dist"
 	},
 	"devDependencies": {
