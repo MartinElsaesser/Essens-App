@@ -5,8 +5,8 @@ import Groups from "./pages/groups.imba"
 import User from "./pages/user.imba"
 
 tag Layout
+	css w:100% h:100% pb:70px
 	<self>
-		css w:100% h:100%
 		<Navbar>
 		<Home route="/home">
 		<Add route="/add">
@@ -15,7 +15,7 @@ tag Layout
 
 tag Navbar
 	<self>
-		css w:100% h:80px bg:$gray d:flex ai:center jc:space-evenly pos:relative b:0 pos:fixed w:100%
+		css w:100% h:70px bg:$gray d:flex ai:center jc:space-evenly pos:relative b:0 pos:fixed w:100% zi:11
 		<NavLink route-to="/home"> <i.fa-solid.fa-burger>
 		<NavLink route-to="/add"> <i.fa-solid.fa-circle-plus>
 		<NavLink route-to="/groups"> <i.fa-solid.fa-users>

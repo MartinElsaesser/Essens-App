@@ -3,14 +3,14 @@ import {recommended} from "../recommended";
 export default tag Home
 	css w:100% h:100% px:10px pt:20px
 		main
-			d:flex ai:center fld:column jc:space-between
+			d:flex ai:center fld:column jc:space-between h:100%
 		.recipes
 			d:grid gtc: 1fr 1fr 1fr gtr: 1fr 1fr grid-gap:5px w:100% h:100%
 		.recipes-container
-			max-width: 500px h:45vh w:100% d:flex fld:column
+			max-width: 500px h:45vh w:100% d:flex fld:column flg:1
 		.recipes-slider
 			ofx:scroll h:120px ofy:hidden w:100% ws:nowrap
-		h2 m:0 mt:15px mb:5px
+		h2 m:0 mt:15px mb:2px fs:lg
 	prop drawer-open = false
 	prop categories = ["Frühstück", "4-Personen", "herzhaft", "gesund"]
 	def deleteCategorie e
@@ -52,7 +52,7 @@ tag Header
 	def mount
 		this.flipping = new Flipping({
 			parentElement: this,
-			# duration: 600
+			duration: 300
 		})
 		this.flipping.read()
 
@@ -72,30 +72,30 @@ tag Header
 					<Toast index=i key=category data-flip-key=category> category
 
 tag Search
-	def toggle
-		data = !data
-		emit("change")
-
 	css w:100% d:flex pos:relative ai:center
-	css input w:100% py:15px pl:40px rd:50px ol:none bd:$blue 2px solid
+	css input w:100% py:10px pl:40px rd:50px ol:none bd:$black 1px solid
 		@focus bc: $green
 		@focus ~ .icon-food c:$green
-	css .icon-food pos:absolute l:15px c:$blue fs:lg
-	css button bg:transparent pos:absolute r:15px bd:none fs:lg bg:$green
+	css .icon-food pos:absolute l:15px c:$black fs:lg
+	css button bg:transparent pos:absolute r:15px bd:none fs:lg
 		rd:lg d:flex w:30px h:30px ai:center jc:center cursor:pointer
-		tween:opacity 50ms ease, transform 100ms ease of:hidden
+		tween:opacity 50ms ease, transform 30ms ease of:hidden
 		@media(hover:hover)@hover o:0.8
 		@active scale: 0.8
 		i pos:absolute
+
+	def toggle
+		data = !data
+		emit("change")
 
 	<self>
 		<input type='text' placeholder="Was möchtest du heute essen?">
 		<i.fa-solid.fa-utensils.icon-food>
 		<button @click=toggle>
 			if data
-				<i.fa-solid.fa-xmark[o@off:0 ease:0.5s] ease>
+				<i.fa-solid.fa-xmark[o@out:0 ease:40ms] ease>
 			else
-				<i.fa-solid.fa-sliders[o@off:0 ease:0.5s] ease>
+				<i.fa-solid.fa-sliders[o@out:0 ease:40ms] ease>
 
 tag Toast
 	css pos:relative
@@ -116,14 +116,11 @@ tag Recipe_Small
 		bg:$blue rd:lg pt:4px px:4px d:inline-flex fld:column ml:4px
 		@first ml:0px
 		@invalid@first ml:0px
-		
-		@media(hover:hover)@hover scale:1.1 tween:all 80ms linear
-			.overlay o:.8 tween:all 80ms linear
 		img w:100% rd:10px
 		.text c:white py:5px
 	<self>
 		<img src=recipe.img>
-		<div.text> "Salat Mix"
+		<div.text> recipe.name
 
 tag Recipe
 	prop recipe
@@ -144,10 +141,10 @@ tag Recipe
 			<img.back src=recipe.img>
 			<div.overlay>
 				<div.text>
-					<span.big[mr:auto]> "Salat Mix"
+					<span.big[mr:auto]> recipe.name
 					<i.fa-solid.fa-star>
-					<span.small> "4.0"
+					<span.small> recipe.rating
 				<div.text>
-					<span.small[c:#d2d2d2]> "1 Portion (300g)"
+					<span.small[c:#d2d2d2]> "1 Portion ({recipe.portion_in_g} g)"
 				<div.text>
-					<span.small[c:#d2d2d2]> "320 Kcal | 25% AKG"
+					<span.small[c:#d2d2d2]> "{recipe.cal} kCal"
